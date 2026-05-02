@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# JOSAADecoded
 
-## Getting Started
+A full-stack, mobile-first web application designed to help JEE Mains and Advanced aspirants navigate the JOSAA counselling process with ease. Built with a focus on data density, modern aesthetics, and performance.
 
-First, run the development server:
+## 🚀 Features Completed
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 1. Core Infrastructure
+- **Premium Dark Mode UI**: A fully responsive, modern dark aesthetic utilizing CSS modules and fluid layouts.
+- **Data Integration**: Robust multi-year JOSAA cutoff dataset parsing (2019-2025) via a custom Next.js backend API built over PapaParse.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Cutoff Explorer (`/cutoffs`)
+- **Advanced Cascading Filters**: Filter by Institute Type, Specific Institute, Core Branch, Category, and Gender.
+- **Smart Data Table**: Paginating data table with intelligent sorting logic (e.g., IITs prioritized; Category-aware numerical sorting: OPEN > EWS > OBC > SC > ST).
+- **Clean Representation**: Verbose branch names stripped and cleaned for UI readability.
+- **Historical Trends**: Interactive line charts visualizing historical opening and closing rank trends.
+- **Data Portability**: Export filtered results to CSV.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. College Predictor (`/predictor`)
+- **Intelligent Quota Engine**: Maps Class 12th Domicile State to respective NITs to calculate Home State (HS) and Other State (OS) quotas accurately.
+- **Mathongo-Style Grouped Table**: Highly dense UI grouping eligible branches under their respective colleges. 
+- **Advanced Dynamic Filters**: Post-prediction sidebar checkboxes to filter by Probability, College Type, Course Duration, and Branch Type (all evaluating instantly).
+- **Embedded Trends**: Direct access to historical trend charts right from the predictor rows.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠 Tech Stack
+- **Framework**: Next.js (App Router)
+- **Styling**: Vanilla CSS Modules (No Tailwind)
+- **Data Visualization**: Recharts
+- **Icons**: Lucide React
+- **Data Processing**: PapaParse
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🔜 Next Steps
+- Implement `/compare` feature for side-by-side college evaluation.
+- Implement `/guides` and `/faq` modules.
+- Connect a real database to populate placement statistics ("Est. Avg Package") to enable sorting by salary.
