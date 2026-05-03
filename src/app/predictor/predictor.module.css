@@ -177,6 +177,10 @@
   accent-color: var(--accent-blue);
 }
 
+.mobileToggleBtn {
+  display: none;
+}
+
 /* Results Area */
 .resultsArea {
   display: flex;
@@ -332,6 +336,31 @@
   
   .sidebar {
     position: static;
+    display: none;
+  }
+
+  .sidebar.mobileVisible {
+    display: flex;
+  }
+
+  .mobileToggleBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem;
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--foreground);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .mobileToggleBtn:hover {
+    background: rgba(15, 23, 42, 0.8);
   }
   
   .collegeCell {

@@ -1,13 +1,13 @@
 import { getFilters, getCollegeMetadata } from "@/lib/dataParser";
-import PredictorClient from "./PredictorClient";
+import CompareClient from "./CompareClient";
 
 export const dynamic = "force-dynamic";
 
-export default async function PredictorPage() {
+export default async function ComparePage() {
   const filters = getFilters();
   const metadata = getCollegeMetadata();
 
   return (
-    <PredictorClient filters={filters} metadata={metadata} />
+    <CompareClient filters={filters} metadata={metadata} />
   );
 }

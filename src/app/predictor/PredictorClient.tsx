@@ -85,7 +85,7 @@ const getInstituteState = (institute: string) => {
   return "India";
 };
 
-export default function PredictorClient({ filters }: { filters: any }) {
+export default function PredictorClient({ filters, metadata }: { filters: any, metadata: Record<string, any> }) {
   // Inputs
   const [exam, setExam] = useState("JEE Main");
   const [rank, setRank] = useState("");
@@ -107,6 +107,7 @@ export default function PredictorClient({ filters }: { filters: any }) {
   const [stateFilter, setStateFilter] = useState<string[]>([]);
 
   // Filter UI Toggles
+  const [mobileShowSidebar, setMobileShowSidebar] = useState(false);
   const [expandedFilters, setExpandedFilters] = useState<Record<string, boolean>>({
     "Probability": true,
     "College Type": true,
@@ -300,8 +301,17 @@ export default function PredictorClient({ filters }: { filters: any }) {
 
   return (
     <div className={styles.container}>
+      {/* Mobile Toggle Button */}
+      <button 
+        className={styles.mobileToggleBtn}
+        onClick={() => setMobileShowSidebar(!mobileShowSidebar)}
+      >
+        <Filter size={18} />
+        {mobileShowSidebar ? "Hide Details & Filters" : "Show Details & Filters"}
+      </button>
+
       {/* Left Sidebar */}
-      <aside className={styles.sidebar}>
+      <aside className={`${styles.sidebar} ${mobileShowSidebar ? styles.mobileVisible : ''}`}>
         
         {/* Form Section */}
         <div className={styles.detailsBox}>
@@ -360,7 +370,10 @@ export default function PredictorClient({ filters }: { filters: any }) {
 
           <button 
             className={styles.predictBtn} 
-            onClick={handlePredict}
+            onClick={() => {
+              handlePredict();
+              setMobileShowSidebar(false); // Auto-hide sidebar on mobile after predict
+            }}
             disabled={!rank || !category || !gender || loading}
           >
             {loading ? "Calculating..." : (hasPredicted ? "Update Prediction" : "Predict Colleges")}
@@ -511,7 +524,7 @@ export default function PredictorClient({ filters }: { filters: any }) {
                                       </div>
                                       <div className={styles.metaItem}>
                                         <Banknote size={14} className={styles.metaIcon} />
-                                        <span>Highest Package: N/A</span>
+                                        <span>Highest Package: {metadata[group.institute.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()]?.['Highest Package'] || "N/A"}</span>
                                       </div>
                                     </div>
                                   </div>
@@ -524,7 +537,13 @@ export default function PredictorClient({ filters }: { filters: any }) {
                                   <TrendingUp size={14} /> Trend
                                 </button>
                               </td>
-                              <td className={styles.naText}>N/A</td>
+                              <td>
+                                {(() => {
+                                  const normalizedKey = group.institute.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+                                  const pkg = metadata[normalizedKey]?.['Avg Package'];
+                                  return pkg ? <span style={{fontWeight: 600, color: '#4ade80'}}>{pkg}</span> : <span className={styles.naText}>N/A</span>;
+                                })()}
+                              </td>
                               <td>
                                 <span className={`${styles.probBadge} ${styles[branch.probability.toLowerCase()]}`}>
                                   {branch.probability.toUpperCase()}

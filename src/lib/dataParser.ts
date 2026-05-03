@@ -66,3 +66,42 @@ export function getFilters() {
 
   return { institutes, programs, seatTypes, genders, years };
 }
+
+export interface CollegeMetadata {
+  Institute: string;
+  Established: string;
+  Ownership: string;
+  'NIRF Rank': string;
+  'Campus Size': string;
+  'Total Fees': string;
+  'Placement %': string;
+  'Highest Package': string;
+  'Avg Package': string;
+}
+
+let cachedMetadata: Record<string, CollegeMetadata> | null = null;
+
+export function getCollegeMetadata(): Record<string, CollegeMetadata> {
+  if (cachedMetadata) return cachedMetadata;
+
+  const metadataPath = path.join(process.cwd(), 'cutoffs', 'college_metadata.csv');
+  const metadataMap: Record<string, CollegeMetadata> = {};
+
+  if (fs.existsSync(metadataPath)) {
+    const fileContent = fs.readFileSync(metadataPath, 'utf-8');
+    const parsed = Papa.parse(fileContent, {
+      header: true,
+      skipEmptyLines: true,
+    });
+
+    for (const row of parsed.data as any[]) {
+      if (!row['Institute']) continue;
+      // Bulletproof normalization: remove all non-alphanumeric chars
+      const normalizedInst = row['Institute'].replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+      metadataMap[normalizedInst] = row;
+    }
+  }
+
+  cachedMetadata = metadataMap;
+  return cachedMetadata;
+}

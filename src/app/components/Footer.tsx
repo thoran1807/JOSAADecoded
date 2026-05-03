@@ -14,7 +14,7 @@ export default function Footer() {
           </p>
         </div>
         <div className={styles.credits}>
-          <p>&copy; {new Date().getFullYear()} JOSAADecoded. Developed by Thora.</p>
+          <p>&copy; {new Date().getFullYear()} JOSAADecoded. Developed by Thoran.</p>
         </div>
       </div>
     </footer>
